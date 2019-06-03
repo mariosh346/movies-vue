@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export function getSearchItems (apiPath, page, searchText, cancelSource) {
+export function getSearchItems (page, searchText, cancelSource) {
   return axios.get(
     `https://api.themoviedb.org/3/search/movie`, {
       params: {

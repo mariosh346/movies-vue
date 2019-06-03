@@ -22,10 +22,21 @@
           />
         </v-toolbar>
 
+        <div 
+          v-if="totalPages>0"
+          class="text-xs-center"
+        >
+          <v-pagination
+            v-model="page"
+            :length="totalPages"
+            :total-visible="7"
+          />
+        </div>
+
         <v-list two-line>
           <template v-for="(item, index) in items">
             <v-list-tile
-              :key="item.title"
+              :key="item.id"
               avatar
               ripple
               @click="toggle(index)"

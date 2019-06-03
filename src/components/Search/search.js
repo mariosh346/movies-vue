@@ -8,7 +8,11 @@ export default {
       cancelGetItems: null,
       selected: [2],
       search: '',
-      items: []
+      items: [],
+      page: 1,
+      totalPages: 0,
+      lettersLimit: 3,
+      noData: true
     }
   },
   computed: {
@@ -16,7 +20,10 @@ export default {
 
   watch: {
     search (newSearch) {
-      this.getItems(newSearch)
+      this.searchItems(newSearch, this.page)
+    },   
+    page (newPage) {
+      this.searchItems(this.search, newPage)
     }
   },
 
@@ -24,6 +31,8 @@ export default {
     clearSearch () {
       this.search = ''
       this.items = []
+      this.page = 1
+      this.totalPages = 0
     },
 
     toggle (index) {
@@ -41,17 +50,17 @@ export default {
     * @param {String} search - Input value from user
     * @return {Promise} - Promise with array of Products for this search
     */
-    onSearch (search) {
-      this.inputVal = search
-
-      this.noData = false
-      if (search.length < this.lettersLimit) {
+    searchItems (search, page) {
+      if (search.length < this.lettersLimit || (!/^[a-zA-Z0-9]+$/.test(search)) ) {
         this.items = []
+        this.page = 1
+        this.totalPages = 0
         this.loading = false
         return
       }
+      this.noData = false
       this.loading = true
-      return this.getItems(search)
+      return this.getItems(search, page)
     },
 
     /*
@@ -59,12 +68,12 @@ export default {
     * @param {String} search - Input value from user
     * @return {Promise} - Promise with array of Products of this search
     */
-    getItems: _.debounce(function (search) {
+    getItems: _.debounce(function (search, page) {
       this.checkCancelGetItems(this.cancelGetItems, this.gotItems)
       this.gotItems = false
       this.cancelGetItems = CancelToken.source()
 
-      return getSearchItems(this.autocompleteProductsPath, this.itemsLimit, search, this.cancelGetItems)
+      return getSearchItems(page, search, this.cancelGetItems)
         .then(this.onGetItems)
         .catch((e) => {
           // eslint-disable-next-line no-console
@@ -92,6 +101,8 @@ export default {
      */
     onGetItems (response) {
       this.items = response.data.results
+      this.page = response.data.page
+      this.totalPages = response.data.total_pages
       this.loading = false
       this.cancelGetItems = null
 

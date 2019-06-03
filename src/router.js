@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Search from './components/Search/search.vue'
+import MovieModal from './components/movieModal.vue'
 // import Projects from './views/Projects.vue'
 // import Team from './views/Team.vue'
 
@@ -13,7 +14,10 @@ export default new Router({
     {
       path: '/',
       name: 'search',
-      component: Search
+      component: Search,
+      children: [
+        { path: ':id', component: MovieModal, name: 'movieModal' }
+      ]
     }
   ]
 })

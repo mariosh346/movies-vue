@@ -35,11 +35,13 @@
 
         <v-list two-line>
           <template v-for="(item, index) in items">
+            <router-link :to="{name: 'movieModal', params: {id: item.id}}">
+              See item 1
+            </router-link>
             <v-list-tile
               :key="item.id"
               avatar
               ripple
-              @click="toggle(index)"
             >
               <v-list-tile-content>
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>

@@ -15,9 +15,11 @@ export default new Router({
       path: '/',
       name: 'search',
       component: Search,
-      children: [
-        { path: ':id', component: MovieModal, name: 'movieModal' }
-      ]
+    },
+    { 
+      path: 'movie/:id',
+      component: MovieModal,
+      name: 'movieModal'
     }
   ]
 })

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Search from './components/Search/search.vue'
 import MovieModal from './components/movieModal.vue'
+import Collections from './components/collections.vue'
 // import Projects from './views/Projects.vue'
 // import Team from './views/Team.vue'
 
@@ -22,6 +23,11 @@ export default new Router({
           name: 'movieModal'
         }
       ]
+    },
+    {
+      path: '/collections',
+      name: 'collections',
+      component: Collections
     }
   ]
 })

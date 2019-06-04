@@ -2,26 +2,19 @@
   <v-layout row>
     <v-flex>
       <v-card>
-        <v-toolbar>
-          <v-toolbar-side-icon />
-
-          <v-toolbar-title>Movies</v-toolbar-title>
-        
-          <v-text-field
-            v-model="search"
-            xs12
-            sm6
-            offset-sm3
-            class="mx-3"
-            flat
-            label="Search"
-            prepend-inner-icon="search"
-            solo-inverted
-            clearable 
-            @click:clear="clearSearch"
-          />
-        </v-toolbar>
-
+        <v-text-field
+          v-model="search"
+          xs12
+          sm6
+          offset-sm3
+          class="mx-3"
+          flat
+          label="Search"
+          prepend-inner-icon="search"
+          solo-inverted
+          clearable 
+          @click:clear="clearSearch"
+        />
         <div 
           v-if="totalPages>0"
           class="text-xs-center"
@@ -42,7 +35,7 @@
               ripple
             >
               <router-link 
-                :to="{name: 'movieModal', params: {id: item.id}}"
+                :to="{ name: 'movieModal', params: { id: item.id }}"
                 tag="button"
               >
                 <v-list-tile-content>

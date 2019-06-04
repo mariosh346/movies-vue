@@ -58,8 +58,8 @@
           clearable 
           type="number"
           max="10"
+          min="0.5"
         />
-        <!-- <v-icon>star_border</v-icon> -->
       </v-card-actions>
     </VCard>
   </v-dialog>

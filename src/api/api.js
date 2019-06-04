@@ -17,7 +17,7 @@ export function getSearchItems (page, searchText, cancelSource) {
 
 export function getMovie (id) {
   return axios.get(
-    `https://api.themoviedb.org/3/search/movie/${id}`, {
+    `https://api.themoviedb.org/3/movie/${id}`, {
       params: {
         api_key: key
       }

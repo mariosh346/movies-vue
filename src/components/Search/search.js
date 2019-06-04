@@ -1,12 +1,12 @@
 import _ from 'lodash'
-import { getSearchItems } from '../../api/api'
+import { getSearchItems, getMovie } from '../../api/api'
 import { CancelToken } from 'axios'
 
 export default {
   data () {
     return {
       cancelGetItems: null,
-      selected: [2],
+      selected: null,
       search: '',
       items: [],
       page: 1,
@@ -33,16 +33,6 @@ export default {
       this.items = []
       this.page = 1
       this.totalPages = 0
-    },
-
-    toggle (index) {
-      const i = this.selected.indexOf(index)
-
-      if (i > -1) {
-        this.selected.splice(i, 1)
-      } else {
-        this.selected.push(index)
-      }
     },
 
     /*

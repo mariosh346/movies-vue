@@ -2,7 +2,7 @@
   <v-layout row>
     <v-flex>
       <v-card>
-        <v-toolbar dark>
+        <v-toolbar>
           <v-toolbar-side-icon />
 
           <v-toolbar-title>Movies</v-toolbar-title>
@@ -34,15 +34,16 @@
         </div>
 
         <v-list two-line>
+          <router-view />
           <template v-for="(item, index) in items">
-            <router-link :to="{name: 'movieModal', params: {id: item.id}}">
-              See item 1
-            </router-link>
             <v-list-tile
               :key="item.id"
               avatar
               ripple
             >
+              <router-link :to="{name: 'movieModal', params: {id: item.id}}">
+                See item 1
+              </router-link>
               <v-list-tile-content>
                 <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                 <v-list-tile-sub-title class="text--primary">

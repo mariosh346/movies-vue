@@ -1,9 +1,11 @@
 <template>
   <v-dialog v-model="item">
-    <h1>{{ item.title }}</h1>
-    <v-btn @click="$router.go(-1)">
-      close
-    </v-btn>
+    <VCard>    
+      <h1>{{ item.title }}</h1>
+      <v-btn @click="$router.go(-1)">
+        close
+      </v-btn>
+    </VCard>
   </v-dialog>
 </template>
 

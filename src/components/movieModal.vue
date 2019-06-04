@@ -19,12 +19,17 @@ export default {
       id: this.$route.params.id
     }
   },
+  watch: {
+    item (val) {
+      if (!val)
+        this.$router.go(-1)
+    }
+  },
   created() {
-    // use $route.params.id to get the item for that ID from whereever you have stored all the items.
-    getMovie(this.id).then(this.onGetMovie)
+    getMovie(this.id)
+      .then(this.onGetMovie)
       .catch((e) => {
-        // eslint-disable-next-line no-console
-        console.log(e)
+        alert("Not available movie")
       })
   },
   methods: {

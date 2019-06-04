@@ -1,10 +1,6 @@
 <template>
   <v-dialog v-model="item">
     <VCard>
-      <!-- <v-btn @click="$router.go(-1)">
-        close
-      </v-btn> -->
-
       <v-layout>
         <v-flex xs8>
           <v-card-title primary-title>
@@ -50,16 +46,16 @@
           </v-card-title>
         </v-flex>
       </v-layout>
-      <v-divider light></v-divider>
+      <v-divider light />
       <v-card-actions class="pa-3">
-        Rate this album
-        <v-spacer></v-spacer>
+        Rate this movie
+        <v-spacer />
         <v-text-field
+          v-model="rating"
           placeholder="rate"
-          append-icon="star"
+          prepend-icon="star"
           autofocus
           clearable 
-          :rules="inputRules"
           type="number"
           max="10"
         />
@@ -70,15 +66,15 @@
 </template>
 
 <script>
-import { getMovie } from '../api/api'
+import { getMovie, rateMovie } from '../api/api'
+import { debuglog } from 'util';
 
 export default {
   data() {
     return {
       item: {},
-      rate: null,
-      id: this.$route.params.id,
-      inputRules: [v => 10 >= v.length >= 0 || "Type from 0 to 10"]
+      rating: null,
+      id: this.$route.params.id
     }
   },
   watch: {
@@ -86,10 +82,11 @@ export default {
       if (!val)
         this.$router.go(-1)
     },
-    rate (val) {
-      // if (val)
-        
-    }
+    rating: _.debounce(function (newRate, oldRate) {
+      newRate = parseFloat(newRate)
+      if(newRate>0.5 && newRate<10)
+        rateMovie(this.id, newRate)
+    }, 500)
   },
   created() {
     getMovie(this.id)

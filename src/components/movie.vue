@@ -17,7 +17,7 @@
             </div>
             <v-avatar
               tile
-              size="100px"
+              size="200px"
             >
               <v-img
                 v-if="item.poster_path"
@@ -50,26 +50,25 @@
       v-else
       :key="item.id"
       :to="{ name: 'movieModal', params: { id: item.id }}"
-      tag="div"
+      tag="v-list-item"
     >
-      <v-list-item>
-        <v-list-item-icon>
-          <v-avatar size="50px">
-            <v-img
-              v-if="item.poster_path"
-              :src="`http://image.tmdb.org/t/p/w185/${item.poster_path}`"
-            />
-            <v-icon
-              v-else
-              :color="message.color"
-              v-text="message.icon"
-            />
-          </v-avatar>
-        </v-list-item-icon>
-        <v-list-tile-content>
-          <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-          <v-list-tile-sub-title>{{ item.vote_average }}</v-list-tile-sub-title>
-        </v-list-tile-content>
+      <v-list-item-icon>
+        <v-avatar>
+          <v-img
+            v-if="item.poster_path"
+            :src="`http://image.tmdb.org/t/p/w185/${item.poster_path}`"
+          />
+          <v-icon
+            v-else
+            :color="message.color"
+            v-text="message.icon"
+          />
+        </v-avatar>
+      </v-list-item-icon>
+      <v-list-tile-content>
+        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+        <v-list-tile-sub-title>{{ item.vote_average }}</v-list-tile-sub-title>
+      </v-list-tile-content>
       <!-- <v-list-tile-action>
                   <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
                   <v-icon
@@ -86,7 +85,6 @@
                     star
                   </v-icon>
       </v-list-tile-action>-->
-      </v-list-item>
     </router-link>
   </div>
 </template>

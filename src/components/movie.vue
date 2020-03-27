@@ -15,7 +15,10 @@
             >
               {{ lang.name }}
             </div>
-            <v-avatar tile size="100px">
+            <v-avatar
+              tile
+              size="100px"
+            >
               <v-img
                 v-if="item.poster_path"
                 :src="`http://image.tmdb.org/t/p/w185/${item.poster_path}`"

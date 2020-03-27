@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Search from './components/Search/search.vue'
+import Search from './components/search.vue'
 import MovieModal from './components/movieModal.vue'
 import Collections from './components/collections.vue'
 // import Projects from './views/Projects.vue'

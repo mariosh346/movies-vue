@@ -37,7 +37,7 @@
 
 <script>
 import VueRouter from 'vue-router'
-import Search from './components/Search/search.vue'
+import Search from './components/search.vue'
 
 export default {
   name: 'App',

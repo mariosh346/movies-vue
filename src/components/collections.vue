@@ -1,10 +1,13 @@
 <template>
   <div>
     <div
-      v-for="(collection, index) in collections"
+      v-for="(collection, i) in collections"
       :key="collection.id"
     >
-      <input v-model="collection.title" type="text" />
+      <input
+        v-model="collection.title"
+        type="text"
+      >
     </div>
     <v-btn
       color="success"
@@ -36,5 +39,4 @@ export default {
       })
     }
   }
-}
 </script>

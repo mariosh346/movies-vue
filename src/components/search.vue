@@ -1,8 +1,61 @@
+<template> 
+  <v-layout row>
+    <v-flex>
+      <v-card>
+        <v-text-field
+          v-model="search"
+          xs12
+          sm6
+          offset-sm3
+          class="mx-3"
+          flat
+          label="Search"
+          prepend-inner-icon="search"
+          solo-inverted
+          clearable 
+          @click:clear="clearSearch"
+        />
+        <div 
+          v-if="totalPages>0"
+          class="text-xs-center"
+        >
+          <v-pagination
+            v-model="page"
+            :length="totalPages"
+            :total-visible="7"
+          />
+        </div>
+
+        <v-list
+          two-line
+          subheader
+        >
+          <router-view />
+          <template v-for="(item, index) in items">
+            <movie 
+              :key="item.id"
+              :item="item"
+            />
+            <v-divider
+              v-if="index + 1 < items.length"
+              :key="index"
+            />
+          </template>
+        </v-list>
+      </v-card>
+    </v-flex>
+  </v-layout>
+</template>
+<script>
 import _ from 'lodash'
-import { getSearchItems, getMovie } from '../../api/api'
 import { CancelToken } from 'axios'
+import Movie from './movie'
+import { getSearchItems, getMovie } from '../api/api'
 
 export default {
+  components: {
+    Movie
+  },
   data () {
     return {
       cancelGetItems: null,
@@ -100,3 +153,6 @@ export default {
     }
   }
 }
+
+</script>
+<style></style>

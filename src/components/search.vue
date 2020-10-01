@@ -1,7 +1,7 @@
 <template> 
   <v-layout row>
     <v-flex>
-      <v-card>
+      <v-card class="pa-4">
         <v-text-field
           v-model="search"
           xs12
@@ -14,6 +14,7 @@
           prepend-inner-icon="search"
           solo-inverted
           clearable
+          browser-autocomplete="movies"
           @click:clear="clearSearch"
         />
         <div 
@@ -33,6 +34,16 @@
             v-for="(item) in items"
             :key="item.id"
             :item="item"
+          />
+        </div>
+        <div
+          v-if="totalPages>0"
+          class="text-xs-center"
+        >
+          <v-pagination
+            v-model="page"
+            :length="totalPages"
+            :total-visible="7"
           />
         </div>
       </v-card>

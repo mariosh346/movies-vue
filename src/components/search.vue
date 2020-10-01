@@ -12,7 +12,7 @@
           label="Search"
           prepend-inner-icon="search"
           solo-inverted
-          clearable 
+          clearable
           @click:clear="clearSearch"
         />
         <div 
@@ -26,22 +26,15 @@
           />
         </div>
 
-        <v-flex
-          two-line
-          subheader
-        >
+        <div class="d-flex ma-2 flex-wrap">
           <router-view />
           <template v-for="(item, index) in items">
             <movie 
               :key="item.id"
               :item="item"
             />
-            <v-divider
-              v-if="index + 1 < items.length"
-              :key="index"
-            />
           </template>
-        </v-flex>
+        </div>
       </v-card>
     </v-flex>
   </v-layout>
@@ -155,4 +148,8 @@ export default {
 }
 
 </script>
-<style></style>
+<style>
+.flex-wrap {
+  flex-wrap: wrap;
+}
+</style>

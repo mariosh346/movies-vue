@@ -38,7 +38,7 @@ export function getSessionId () {
       }
     }
   ).then((response) => {
-    return sessionId = response.guest_session_id
+    sessionId = response.data.guest_session_id
     // setTimeout(() => {
     //   getSessionId()
     // }, Date.parse(response.expires_at) - Date.now());
@@ -47,7 +47,7 @@ export function getSessionId () {
 
 export function rateMovie(id, rating) {
   if(!sessionId) {
-    return getSessionId().then((response) => {
+    return getSessionId().then(() => {
       return postRate(id, rating, sessionId)
     })
   }
@@ -65,7 +65,7 @@ export function postRate(id, rating) {
       },
       params: {
         api_key: key,
-        guest_session_id: window.sessionId
+        guest_session_id: sessionId
       }
     })
 }

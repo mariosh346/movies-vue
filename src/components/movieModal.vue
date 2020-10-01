@@ -1,43 +1,74 @@
 <template>
-  <v-dialog v-model="item">
+  <v-dialog
+    v-model="item"
+    class="ma-2"
+  >
     <VCard>
       <v-layout>
-        <movie
-          :item="item"
-          :is-modal="true"
-        />
+        <v-flex xs8>
+          <v-card-title primary-title>
+            <avatar :poster-path="item.poster_path" />
+            <div>
+              <div class="headline">
+                {{ item.title }}
+              </div>
+              <div>{{ item.overview }}</div>
+              <div>{{ item.release_date }}</div>
+              <div
+                v-for="lang in item.spoken_languages"
+                :key="lang.name"
+              >
+                {{ lang.name }}
+              </div>
+            </div>
+          </v-card-title>
+        </v-flex>
+        <v-flex xs4>
+          <v-card-title primary-title>
+            <div>
+              <div>
+                <span class="headline">{{ item.vote_average }}</span>
+                /10
+                <v-text-field
+                  v-model="rating"
+                  placeholder="Rate this movie"
+                  prepend-icon="star"
+                  autofocus
+                  clearable
+                  type="number"
+                  max="10"
+                  min="0.5"
+                  step="0.5"
+                  :success="success"
+                  :error="error"
+                  @keyup="rate"
+                />
+              </div>
+
+              <div>{{ item.vote_count }}</div>
+              <div>{{ item.budget }}</div>
+              <div>{{ item.revenue }}</div>
+            </div>
+          </v-card-title>
+        </v-flex>
       </v-layout>
-      <v-divider light />
-      <v-card-actions class="pa-3">
-        Rate this movie
-        <v-spacer />
-        <v-text-field
-          v-model="rating"
-          placeholder="rate"
-          prepend-icon="star"
-          autofocus
-          clearable
-          type="number"
-          max="10"
-          min="0.5"
-          @keyup="rate"
-        />
-      </v-card-actions>
     </VCard>
   </v-dialog>
 </template>
 
 <script>
 import { getMovie, rateMovie } from '../api/api'
-import Movie from './movie' 
+import Avatar from './avatar'
 
 export default {
   components: {
-    Movie
+    Avatar
   },
   data() {
     return {
       item: {},
+      success: false,
+      error: false,
       rating: undefined,
       id: this.$route.params.id
     }
@@ -62,7 +93,13 @@ export default {
     rate({ key }) {
       if (key === 'Enter') {
         const newRate = parseFloat(this.rating);
-        rateMovie(this.id, newRate);
+        rateMovie(this.id, newRate).then(() => {
+          this.success = true
+          this.error = false
+        }).catch(() => {
+          this.success = false
+          this.error = true
+        });
       }
     }
   }

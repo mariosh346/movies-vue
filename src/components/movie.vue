@@ -1,51 +1,28 @@
 <template>
   <div class="d-flex-item">
-    <template v-if="isModal">
-      <v-flex xs8>
-        <v-card-title primary-title>
-          <div>
-            <div class="headline">
-              {{ item.title }}
-            </div>
-            <div>{{ item.overview }}</div>
-            <div>({{ item.release_date }})</div>
-            <div
-              v-for="lang in item.spoken_languages"
-              :key="lang.name"
-            >
-              {{ lang.name }}
-            </div>
-            <avatar :poster-path="item.poster_path" />
-          </div>
-        </v-card-title>
-      </v-flex>
-      <v-flex xs4>
-        <v-card-title primary-title>
-          <div>
-            <div>
-              <span class="headline">{{ item.vote_average }}</span>
-              /10
-            </div>
-            <div>{{ item.vote_count }}</div>
-            <div>{{ item.budget }}</div>
-            <div>{{ item.revenue }}</div>
-          </div>
-        </v-card-title>
-      </v-flex>
-    </template>
-    <router-link 
-      v-else
+    <router-link
       :key="item.id"
       :to="{ name: 'movieModal', params: { id: item.id }}"
-      tag="a"
+      tag="v-btn"
     >
-      <div class="d-flex ma-2">
+      <div class="d-flex ma-2 justify-space-between">
         <div class="d-flex-item">
           <avatar :poster-path="item.poster_path" />
         </div>
         <div class="d-flex-item">
-          <div>{{ item.title }}</div>
-          <div>{{ item.vote_average }}</div>
+          <span>{{ item.title }}</span>
+        </div>
+        <div class="d-flex-item">
+          <span>
+            <v-icon
+              color="yellow darken-2"
+              text="icon"
+              :small="true"
+            >
+              star
+            </v-icon>
+            {{ item.vote_average }}
+          </span>
         </div>
       <!-- <v-list-tile-action>
                   <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>

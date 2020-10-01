@@ -10,6 +10,7 @@
           class="mx-3"
           flat
           label="Search"
+          :loading="loading"
           prepend-inner-icon="search"
           solo-inverted
           clearable
@@ -28,12 +29,11 @@
 
         <div class="d-flex ma-2 flex-wrap">
           <router-view />
-          <template v-for="(item, index) in items">
-            <movie 
-              :key="item.id"
-              :item="item"
-            />
-          </template>
+          <movie
+            v-for="(item) in items"
+            :key="item.id"
+            :item="item"
+          />
         </div>
       </v-card>
     </v-flex>
@@ -43,7 +43,7 @@
 import _ from 'lodash'
 import { CancelToken } from 'axios'
 import Movie from './movie'
-import { getSearchItems, getMovie } from '../api/api'
+import { getSearchItems } from '../api/api'
 
 export default {
   components: {
@@ -58,6 +58,7 @@ export default {
       page: 1,
       totalPages: 0,
       lettersLimit: 3,
+      loading: false,
       noData: true
     }
   },

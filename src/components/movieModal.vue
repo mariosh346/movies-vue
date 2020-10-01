@@ -7,8 +7,10 @@
       <v-layout>
         <v-flex xs8>
           <v-card-title primary-title>
-            <avatar :poster-path="item.poster_path" />
-            <div>
+            <avatar
+              :poster-path="item.poster_path"
+            />
+            <div class="ma-2">
               <div class="headline">
                 {{ item.title }}
               </div>
@@ -27,11 +29,18 @@
           <v-card-title primary-title>
             <div>
               <div>
+                <v-icon
+                  color="yellow darken-2"
+                  text="icon"
+                  class="mr-2"
+                >
+                  star
+                </v-icon>
                 <span class="headline">{{ item.vote_average }}</span>
                 /10
                 <v-text-field
                   v-model="rating"
-                  placeholder="Rate this movie"
+                  placeholder="Rate"
                   prepend-icon="star"
                   autofocus
                   clearable
@@ -39,6 +48,7 @@
                   max="10"
                   min="0.5"
                   step="0.5"
+                  :loading="loading"
                   :success="success"
                   :error="error"
                   @keyup="rate"
@@ -67,6 +77,7 @@ export default {
   data() {
     return {
       item: {},
+      loading: false,
       success: false,
       error: false,
       rating: undefined,
@@ -92,6 +103,7 @@ export default {
     },
     rate({ key }) {
       if (key === 'Enter') {
+        this.loading = true;
         const newRate = parseFloat(this.rating);
         rateMovie(this.id, newRate).then(() => {
           this.success = true
@@ -99,6 +111,8 @@ export default {
         }).catch(() => {
           this.success = false
           this.error = true
+        }).finally(() => {
+          this.loading = false
         });
       }
     }

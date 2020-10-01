@@ -1,29 +1,32 @@
 <template>
-  <div class="d-flex-item">
+  <v-btn
+    style="width: 49%"
+    class="pa-5 sm6"
+  >
     <router-link
       :key="item.id"
       :to="{ name: 'movieModal', params: { id: item.id }}"
-      tag="v-btn"
+      tag="div"
+      class="d-flex ma-2 align-center v-content__wrap"
     >
-      <div class="d-flex ma-2 justify-space-between">
-        <div class="d-flex-item">
-          <avatar :poster-path="item.poster_path" />
-        </div>
-        <div class="d-flex-item">
-          <span>{{ item.title }}</span>
-        </div>
-        <div class="d-flex-item">
-          <span>
-            <v-icon
-              color="yellow darken-2"
-              text="icon"
-              :small="true"
-            >
-              star
-            </v-icon>
-            {{ item.vote_average }}
-          </span>
-        </div>
+      <div class="ma-2">
+        <avatar :poster-path="item.poster_path" />
+      </div>
+      <div class="ma-2">
+        <span>{{ item.title }}</span>
+      </div>
+      <div class="ma-2">
+        <span>
+          <v-icon
+            color="yellow darken-2"
+            text="icon"
+            :small="true"
+          >
+            star
+          </v-icon>
+          {{ item.vote_average }}
+        </span>
+      </div>
       <!-- <v-list-tile-action>
                   <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
                   <v-icon
@@ -40,9 +43,8 @@
                     star
                   </v-icon>
       </v-list-tile-action>-->
-      </div>
     </router-link>
-  </div>
+  </v-btn>
 </template>
 
 <script>

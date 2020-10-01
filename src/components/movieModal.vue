@@ -20,6 +20,7 @@
           type="number"
           max="10"
           min="0.5"
+          @keyup="rate"
         />
       </v-card-actions>
     </VCard>
@@ -28,7 +29,6 @@
 
 <script>
 import { getMovie, rateMovie } from '../api/api'
-import { debuglog } from 'util';
 import Movie from './movie' 
 
 export default {
@@ -38,6 +38,7 @@ export default {
   data() {
     return {
       item: {},
+      rating: undefined,
       id: this.$route.params.id
     }
   },
@@ -57,6 +58,12 @@ export default {
   methods: {
     onGetMovie (response) {
       this.item = response.data
+    },
+    rate({ key }) {
+      if (key === 'Enter') {
+        const newRate = parseFloat(this.rating);
+        rateMovie(this.id, newRate);
+      }
     }
   }
 }

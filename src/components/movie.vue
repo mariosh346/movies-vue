@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-flex-item">
     <template v-if="isModal">
       <v-flex xs8>
         <v-card-title primary-title>
@@ -15,20 +15,7 @@
             >
               {{ lang.name }}
             </div>
-            <v-avatar
-              tile
-              size="200px"
-            >
-              <v-img
-                v-if="item.poster_path"
-                :src="`http://image.tmdb.org/t/p/w185/${item.poster_path}`"
-              />
-              <v-icon
-                v-else
-                :color="message.color"
-                v-text="message.icon"
-              />
-            </v-avatar>
+            <avatar :poster-path="item.poster_path" />
           </div>
         </v-card-title>
       </v-flex>
@@ -50,25 +37,16 @@
       v-else
       :key="item.id"
       :to="{ name: 'movieModal', params: { id: item.id }}"
-      tag="v-list-item"
+      tag="a"
     >
-      <v-list-item-icon>
-        <v-avatar>
-          <v-img
-            v-if="item.poster_path"
-            :src="`http://image.tmdb.org/t/p/w185/${item.poster_path}`"
-          />
-          <v-icon
-            v-else
-            :color="message.color"
-            v-text="message.icon"
-          />
-        </v-avatar>
-      </v-list-item-icon>
-      <v-list-tile-content>
-        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
-        <v-list-tile-sub-title>{{ item.vote_average }}</v-list-tile-sub-title>
-      </v-list-tile-content>
+      <div class="d-flex ma-2">
+        <div class="d-flex-item">
+          <avatar :poster-path="item.poster_path" />
+        </div>
+        <div class="d-flex-item">
+          <div>{{ item.title }}</div>
+          <div>{{ item.vote_average }}</div>
+        </div>
       <!-- <v-list-tile-action>
                   <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
                   <v-icon
@@ -85,15 +63,15 @@
                     star
                   </v-icon>
       </v-list-tile-action>-->
+      </div>
     </router-link>
   </div>
 </template>
 
 <script>
-import { rateMovie } from "../api/api";
-import { debuglog } from "util";
-
+import Avatar from "@/components/avatar";
 export default {
+  components: { Avatar },
   props: {
     isModal: {
       type: Boolean,
@@ -113,11 +91,7 @@ export default {
   watch: {
     item(val) {
       if (!val) this.$router.go(-1);
-    },
-    rating: _.debounce(function(newRate, oldRate) {
-      newRate = parseFloat(newRate);
-      if (newRate > 0.5 && newRate < 10) rateMovie(this.id, newRate);
-    }, 500)
+    }
   }
 };
 </script>

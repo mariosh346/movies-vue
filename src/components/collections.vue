@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-for="(collection, i) in collections"
+      v-for="(collection) in collections"
       :key="collection.id"
     >
       <input
@@ -18,7 +18,7 @@
   </div>
 </template>
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   data() {

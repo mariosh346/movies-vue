@@ -26,7 +26,7 @@
           />
         </div>
 
-        <v-list
+        <v-flex
           two-line
           subheader
         >
@@ -41,7 +41,7 @@
               :key="index"
             />
           </template>
-        </v-list>
+        </v-flex>
       </v-card>
     </v-flex>
   </v-layout>

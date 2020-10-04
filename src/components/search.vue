@@ -17,34 +17,19 @@
           browser-autocomplete="movies"
           @click:clear="clearSearch"
         />
-        <div 
-          v-if="totalPages>0"
-          class="text-xs-center"
-        >
-          <v-pagination
-            v-model="page"
-            :length="totalPages"
-            :total-visible="7"
-          />
-        </div>
-
         <div class="d-flex ma-2 flex-wrap">
           <router-view />
-          <movie
-            v-for="(item) in items"
-            :key="item.id"
-            :item="item"
-          />
-        </div>
-        <div
-          v-if="totalPages>0"
-          class="text-xs-center"
-        >
-          <v-pagination
-            v-model="page"
-            :length="totalPages"
-            :total-visible="7"
-          />
+          <infinite-scroll 
+            :items="items"
+            :loading="loading"
+            @lastItemIsVisible="fetchNextPage"
+          >
+            <template v-slot="{ item, index }">
+              <movie
+                :item="item"
+              />
+            </template>
+          </infinite-scroll>
         </div>
       </v-card>
     </v-flex>
@@ -55,9 +40,11 @@ import _ from 'lodash'
 import { CancelToken } from 'axios'
 import Movie from './movie'
 import { getSearchItems } from '../api/api'
+import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
 
 export default {
   components: {
+    InfiniteScroll,
     Movie
   },
   data () {
@@ -79,9 +66,6 @@ export default {
   watch: {
     search (newSearch) {
       this.searchItems(newSearch, this.page)
-    },   
-    page (newPage) {
-      this.searchItems(this.search, newPage)
     }
   },
 
@@ -91,6 +75,12 @@ export default {
       this.items = []
       this.page = 1
       this.totalPages = 0
+    },
+
+    fetchNextPage() {
+      this.page = this.page + 1;
+      debugger
+      this.searchItems(this.search, this.page)
     },
 
     /*
@@ -148,7 +138,8 @@ export default {
      * Gets items, stops loading and checks for no data
      */
     onGetItems (response) {
-      this.items = response.data.results
+      this.items = [...this.items, ...response.data.results]
+      debugger
       this.page = response.data.page
       this.totalPages = response.data.total_pages
       this.loading = false

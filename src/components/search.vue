@@ -17,8 +17,8 @@
           browser-autocomplete="movies"
           @click:clear="clearSearch"
         />
+        <router-view />
         <div class="d-flex ma-2 flex-wrap">
-          <router-view />
           <infinite-scroll 
             :items="items"
             :loading="loading"
@@ -79,7 +79,6 @@ export default {
 
     fetchNextPage() {
       this.page = this.page + 1;
-      debugger
       this.searchItems(this.search, this.page)
     },
 
@@ -139,7 +138,6 @@ export default {
      */
     onGetItems (response) {
       this.items = [...this.items, ...response.data.results]
-      debugger
       this.page = response.data.page
       this.totalPages = response.data.total_pages
       this.loading = false

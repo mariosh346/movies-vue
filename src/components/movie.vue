@@ -1,7 +1,7 @@
 <template>
   <v-btn
-    style="width: 49%"
-    class="pa-5 sm6"
+    style="width: 100%"
+    class="pa-5"
   >
     <router-link
       :key="item.id"
@@ -9,13 +9,19 @@
       tag="div"
       class="d-flex ma-2 align-center v-content__wrap"
     >
-      <div class="ma-2">
+      <div
+        class="ma-2"
+        style="text-align: left"
+      >
         <avatar :poster-path="item.poster_path" />
       </div>
       <div class="ma-2">
         <span>{{ item.title }}</span>
       </div>
-      <div class="ma-2">
+      <div
+        class="ma-2"
+        style="text-align: right"
+      >
         <span>
           <v-icon
             color="yellow darken-2"

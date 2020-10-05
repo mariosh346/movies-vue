@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-2">
+  <div class="ma-2 collapsing">
     <v-flex>
       <div class="pa-2">
         <template v-if="withHeader">
@@ -181,3 +181,14 @@ export default {
   }
 }
 </script>
+
+<style>
+.collapsing {
+  -webkit-transition-property: height, visibility;
+  transition-property: height, visibility;
+  -webkit-transition-duration: 1s;
+  transition-duration: 1s;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+}
+</style>

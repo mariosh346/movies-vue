@@ -13,7 +13,7 @@
           intersection: { threshold },
           throttle
         }"
-        :class="[itemClass, 'li-scrollable']"
+        :class="itemClass"
       >
         <slot
           :item="item"
@@ -28,7 +28,6 @@
         @click="onDownButtonClicked"
       >
         {{ buttonText }}
-        <i class="typo-xxs i-down" />
       </button>
     </div>
     <div
@@ -38,7 +37,6 @@
         intersection: { threshold },
         throttle
       }"
-      class="extraItem"
     >
       <slot
         :extraItemIsVisible="extraItemIsVisible"

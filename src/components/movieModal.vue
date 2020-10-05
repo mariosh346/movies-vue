@@ -1,116 +1,99 @@
 <template>
-  <v-dialog
-    v-model="item"
-    class="ma-2"
-  >
-    <VCard>
-      <v-layout>
-        <v-flex xs8>
-          <div class="pa-4">
-            <avatar
-              :poster-path="item.poster_path"
-            />
-            <div class="ma-2">
-              <div class="headline">
-                {{ item.title }}
-              </div>
-              <div>{{ item.overview }}</div>
-              <div>{{ item.release_date }}</div>
-              <div
-                v-for="lang in item.spoken_languages"
-                :key="lang.name"
-              >
-                {{ lang.name }}
-              </div>
-            </div>
-            <div class="d-flex overflow-y-hidden mt-3">
-              <div
-                v-for="review in reviews"
-                :key="review.id"
-                class="px-1"
-              >
-                <div>
-                  {{ review.author }}
-                </div>
-                <div
-                  style="max-height: 40vh"
-                  class="overflow-x-hidden"
-                >
-                  {{ review.content }}
-                </div>
-              </div>
-            </div>
+  <div>
+    <v-flex>
+      <div class="pa-4">
+        <div class="ma-2">
+          <div>{{ item.overview }}</div>
+          <div>{{ item.release_date }}</div>
+          <div
+            v-for="lang in item.spoken_languages"
+            :key="lang.name"
+          >
+            {{ lang.name }}
           </div>
-        </v-flex>
-        <v-flex xs4>
-          <div class="pa-4">
+        </div>
+        <div class="d-flex overflow-y-hidden mt-3">
+          <div
+            v-for="review in reviews"
+            :key="review.id"
+            class="px-1"
+          >
             <div>
-              <div>
-                <v-icon
-                  color="yellow darken-2"
-                  text="icon"
-                  class="mr-2"
-                >
-                  star
-                </v-icon>
-                <span>
-                  <span class="headline">{{ item.vote_average }}/10</span>
-                  <span class="font-weight-thin">
-                    {{ item.vote_count }}
-                  </span>
-                </span>
-
-                <v-text-field
-                  v-model="rating"
-                  placeholder="Rate"
-                  prepend-icon="star"
-                  autofocus
-                  clearable
-                  type="number"
-                  max="10"
-                  min="0.5"
-                  step="0.5"
-                  :loading="loading"
-                  :success="success"
-                  :error="error"
-                  @keyup="rate"
-                />
-              </div>
-              <a
-                v-for="video in videos"
-                :key="video.id"
-                :href="'https://www.youtube.com/watch?v='+video.key"
-                class="v-btn"
-                target="_blank"
-              >
-                <div>{{ video.type }}</div>
-              </a>
-              <div class="d-flex overflow-y-hidden">
-                <span
-                  v-for="similar in similars"
-                  :key="similar.id"
-                  class="ma-2"
-                >
-                  <router-link
-                    :to="{ name: 'movieModal', params: { id: similar.id }}"
-                    tag="div"
-                    class="pa-2"
-                  >
-                    <avatar
-                      :poster-path="similar.poster_path"
-                    />
-                    <div class="my-2 justify-center">
-                      {{ similar.title }}
-                    </div>
-                  </router-link>
-                </span>
-              </div>
+              {{ review.author }}
+            </div>
+            <div
+              style="max-height: 40vh"
+              class="overflow-x-hidden"
+            >
+              {{ review.content }}
             </div>
           </div>
-        </v-flex>
-      </v-layout>
-    </VCard>
-  </v-dialog>
+        </div>
+        <div class="d-flex overflow-y-hidden">
+          <span
+            v-for="similar in similars"
+            :key="similar.id"
+            class="ma-2"
+          >
+            <div class="pa-2">
+              <avatar
+                :poster-path="similar.poster_path"
+              />
+              <div class="my-2 justify-center">
+                {{ similar.title }}
+              </div>
+            </div>
+          </span>
+        </div>
+      </div>
+    </v-flex>
+    <v-flex xs-5>
+      <div class="pa-4">
+        <div>
+          <div>
+            <v-icon
+              color="yellow darken-2"
+              text="icon"
+              class="mr-2"
+            >
+              star
+            </v-icon>
+            <span>
+              <span class="headline">{{ item.vote_average }}/10</span>
+              <span class="font-weight-thin">
+                {{ item.vote_count }}
+              </span>
+            </span>
+
+            <v-text-field
+              v-model="rating"
+              placeholder="Rate"
+              prepend-icon="star"
+              autofocus
+              clearable
+              type="number"
+              max="10"
+              min="0.5"
+              step="0.5"
+              :loading="loading"
+              :success="success"
+              :error="error"
+              @keyup="rate"
+            />
+          </div>
+          <a
+            v-for="video in videos"
+            :key="video.id"
+            :href="'https://www.youtube.com/watch?v='+video.key"
+            class="v-btn"
+            target="_blank"
+          >
+            <div>{{ video.type }}</div>
+          </a>
+        </div>
+      </div>
+    </v-flex>
+  </div>
 </template>
 
 <script>
@@ -120,6 +103,9 @@ import Avatar from './avatar'
 export default {
   components: {
     Avatar
+  },
+  props: {
+    id: undefined
   },
   data() {
     return {
@@ -133,17 +119,7 @@ export default {
       rating: undefined
     }
   },
-  computed: {
-    id() {
-      return this.$route.params.id;
-    }
-  },
   watch: {
-    item (val, old) {
-      if (!val) {
-        this.$router.push('/')
-      }
-    },
     id () {
       this.fetchItems()
     }

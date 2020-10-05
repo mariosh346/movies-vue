@@ -23,11 +23,11 @@ export default new Router({
           name: 'movieModal'
         }
       ]
-    },
-    {
-      path: '/collections',
-      name: 'collections',
-      component: Collections
     }
+    // {
+    //   path: '/collections',
+    //   name: 'collections',
+    //   component: Collections
+    // }
   ]
 })

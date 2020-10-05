@@ -17,8 +17,7 @@
           browser-autocomplete="movies"
           @click:clear="clearSearch"
         />
-        <router-view />
-        <div class="d-flex ma-2 flex-wrap">
+        <div class="ma-2">
           <infinite-scroll 
             :items="items"
             :loading="loading"
@@ -27,6 +26,11 @@
             <template v-slot="{ item, index }">
               <movie
                 :item="item"
+                @click.native="selectId(item.id)"
+              />
+              <movie-modal
+                v-if="selectedId === item.id"
+                :id="item.id"
               />
             </template>
           </infinite-scroll>
@@ -41,9 +45,11 @@ import { CancelToken } from 'axios'
 import Movie from './movie'
 import { getItemsNowPlaying, getSearchItems } from '../api/api'
 import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
+import MovieModal from "@/components/movieModal";
 
 export default {
   components: {
+    MovieModal,
     InfiniteScroll,
     Movie
   },
@@ -57,6 +63,7 @@ export default {
       totalPages: 0,
       lettersLimit: 3,
       loading: false,
+      selectedId: undefined,
       noData: true
     }
   },
@@ -86,6 +93,14 @@ export default {
     fetchNextPage() {
       this.page = this.page + 1;
       this.getItems(this.search, this.page)
+    },
+
+    selectId(id) {
+      if (this.selectedId !== id) {
+        this.selectedId = id
+      } else {
+        this.selectedId = undefined
+      }
     },
 
     /*

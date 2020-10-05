@@ -3,10 +3,8 @@
     style="width: 100%"
     class="pa-5"
   >
-    <router-link
+    <div
       :key="item.id"
-      :to="{ name: 'movieModal', params: { id: item.id }}"
-      tag="div"
       class="d-flex ma-2 align-center v-content__wrap"
     >
       <div
@@ -54,7 +52,7 @@
                     star
                   </v-icon>
       </v-list-tile-action>-->
-    </router-link>
+    </div>
   </v-btn>
 </template>
 

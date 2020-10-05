@@ -17,6 +17,7 @@
           browser-autocomplete="movies"
           @click:clear="clearSearch"
         />
+        <router-view />
         <div class="ma-2">
           <infinite-scroll 
             :items="items"
@@ -28,7 +29,7 @@
                 :item="item"
                 @click.native="selectId(item.id)"
               />
-              <movie-modal
+              <movie-more
                 v-if="selectedId === item.id"
                 :id="item.id"
               />
@@ -45,11 +46,11 @@ import { CancelToken } from 'axios'
 import Movie from './movie'
 import { getItemsNowPlaying, getSearchItems } from '../api/api'
 import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
-import MovieModal from "@/components/movieModal";
+import MovieMore from "@/components/movieMore";
 
 export default {
   components: {
-    MovieModal,
+    MovieMore,
     InfiniteScroll,
     Movie
   },

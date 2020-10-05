@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ma-2">
     <v-flex>
       <div class="pa-2">
         <div>
@@ -50,7 +50,9 @@
     <v-flex>
       <div class="pa-2">
         <div class="ma-2">
-          <div>{{ item.overview }}</div>
+          <div class="py-1">
+            {{ item.overview }}
+          </div>
           <div>{{ item.release_date }}</div>
           <div
             v-for="lang in item.spoken_languages"
@@ -59,13 +61,13 @@
             {{ lang.name }}
           </div>
         </div>
-        <div class="overflow-x-hidden mt-3">
+        <div class="overflow-x-hidden my-3">
           <div
             v-for="review in reviews"
             :key="review.id"
             class="px-1"
           >
-            <div class="ma-2">
+            <div class="ma-2 font-weight-bold">
               {{ review.author }}
             </div>
             <div

@@ -1,7 +1,7 @@
 <template> 
   <v-layout row>
     <v-flex>
-      <v-card class="pa-4">
+      <v-card class="py-4 px-2">
         <v-text-field
           v-model="search"
           xs12

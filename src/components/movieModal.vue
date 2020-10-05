@@ -59,18 +59,17 @@
             {{ lang.name }}
           </div>
         </div>
-        <div class="d-flex overflow-y-hidden mt-3">
+        <div class="overflow-x-hidden mt-3">
           <div
             v-for="review in reviews"
             :key="review.id"
             class="px-1"
-            style="max-width: 50vw"
           >
             <div class="ma-2">
               {{ review.author }}
             </div>
             <div
-              style="max-height: 40vh"
+              style="max-height: 30vh"
               class="overflow-x-hidden"
             >
               {{ review.content }}

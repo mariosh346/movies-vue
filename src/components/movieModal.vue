@@ -23,7 +23,7 @@
                 {{ lang.name }}
               </div>
             </div>
-            <div class="d-flex overflow-y-hidden mt-2">
+            <div class="d-flex overflow-y-hidden mt-3">
               <div
                 v-for="review in reviews"
                 :key="review.id"
@@ -53,8 +53,13 @@
                 >
                   star
                 </v-icon>
-                <span class="headline">{{ item.vote_average }}</span>
-                /10
+                <span>
+                  <span class="headline">{{ item.vote_average }}/10</span>
+                  <span class="font-weight-thin">
+                    {{ item.vote_count }}
+                  </span>
+                </span>
+
                 <v-text-field
                   v-model="rating"
                   placeholder="Rate"
@@ -71,10 +76,6 @@
                   @keyup="rate"
                 />
               </div>
-
-              <div>{{ item.vote_count }}</div>
-              <div>{{ item.budget }}</div>
-              <div>{{ item.revenue }}</div>
               <a
                 v-for="video in videos"
                 :key="video.id"

@@ -1,54 +1,7 @@
 <template>
   <div>
     <v-flex>
-      <div class="pa-4">
-        <div class="ma-2">
-          <div>{{ item.overview }}</div>
-          <div>{{ item.release_date }}</div>
-          <div
-            v-for="lang in item.spoken_languages"
-            :key="lang.name"
-          >
-            {{ lang.name }}
-          </div>
-        </div>
-        <div class="d-flex overflow-y-hidden mt-3">
-          <div
-            v-for="review in reviews"
-            :key="review.id"
-            class="px-1"
-          >
-            <div>
-              {{ review.author }}
-            </div>
-            <div
-              style="max-height: 40vh"
-              class="overflow-x-hidden"
-            >
-              {{ review.content }}
-            </div>
-          </div>
-        </div>
-        <div class="d-flex overflow-y-hidden">
-          <span
-            v-for="similar in similars"
-            :key="similar.id"
-            class="ma-2"
-          >
-            <div class="pa-2">
-              <avatar
-                :poster-path="similar.poster_path"
-              />
-              <div class="my-2 justify-center">
-                {{ similar.title }}
-              </div>
-            </div>
-          </span>
-        </div>
-      </div>
-    </v-flex>
-    <v-flex xs-5>
-      <div class="pa-4">
+      <div class="pa-2">
         <div>
           <div>
             <v-icon
@@ -78,6 +31,7 @@
               :loading="loading"
               :success="success"
               :error="error"
+              style="width: 140px"
               @keyup="rate"
             />
           </div>
@@ -90,6 +44,54 @@
           >
             <div>{{ video.type }}</div>
           </a>
+        </div>
+      </div>
+    </v-flex>
+    <v-flex>
+      <div class="pa-2">
+        <div class="ma-2">
+          <div>{{ item.overview }}</div>
+          <div>{{ item.release_date }}</div>
+          <div
+            v-for="lang in item.spoken_languages"
+            :key="lang.name"
+          >
+            {{ lang.name }}
+          </div>
+        </div>
+        <div class="d-flex overflow-y-hidden mt-3">
+          <div
+            v-for="review in reviews"
+            :key="review.id"
+            class="px-1"
+            style="max-width: 50vw"
+          >
+            <div class="ma-2">
+              {{ review.author }}
+            </div>
+            <div
+              style="max-height: 40vh"
+              class="overflow-x-hidden"
+            >
+              {{ review.content }}
+            </div>
+          </div>
+        </div>
+        <div class="d-flex overflow-y-hidden">
+          <div
+            v-for="similar in similars"
+            :key="similar.id"
+            class="ma-2"
+          >
+            <div class="pa-2">
+              <avatar
+                :poster-path="similar.poster_path"
+              />
+              <div class="my-2 justify-center">
+                {{ similar.title }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </v-flex>

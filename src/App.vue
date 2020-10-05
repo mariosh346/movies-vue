@@ -22,3 +22,11 @@ export default {
   }
 }
 </script>
+
+<style>
+.wrap_text {
+  overflow-x: hidden;
+  white-space: pre-line;
+  overflow-wrap: break-word;
+}
+</style>

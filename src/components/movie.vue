@@ -1,23 +1,21 @@
 <template>
-  <v-btn
-    style="width: 100%"
-    class="pa-5"
+  <button
+    style="width: 100%;
+      flex-flow: row;
+      background-color: #212121;"
+    class="pa-3 ma-1"
   >
     <div
-      :key="item.id"
       class="d-flex ma-2 align-center v-content__wrap"
     >
       <div
         class="ma-2"
-        style="text-align: left"
+        style="text-align: left;"
       >
         <avatar :poster-path="item.poster_path" />
       </div>
       <div
-        class="ma-2"
-        style="overflow-x: hidden;
-          white-space: pre-line;
-          overflow-wrap: break-word;"
+        class="ma-2 wrap_text flex-grow-1"
       >
         <span>{{ item.title }}</span>
       </div>
@@ -36,24 +34,19 @@
           {{ item.vote_average }}
         </span>
       </div>
-      <!-- <v-list-tile-action>
-                  <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                  <v-icon
-                    v-if="selected.indexOf(index) < 0"
-                    color="grey lighten-1"
-                  >
-                    star_border
-                  </v-icon>
-
-                  <v-icon
-                    v-else
-                    color="yellow darken-2"
-                  >
-                    star
-                  </v-icon>
-      </v-list-tile-action>-->
+      <div
+          class="ma-2"
+          style="text-align: right"
+      >
+        {{ item.release_date }}
+      </div>
     </div>
-  </v-btn>
+    <div
+      class="d-flex ma-2 text-xs-left v-content__wrap"
+    >
+      {{ item.overview }}
+    </div>
+  </button>
 </template>
 
 <script>

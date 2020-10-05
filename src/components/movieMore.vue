@@ -9,12 +9,12 @@
             <avatar :poster-path="item.poster_path" />
           </div>
           <div
-            class="my-2"
-            style="overflow-x: hidden;
-          white-space: pre-line;
-          overflow-wrap: break-word;"
+            class="my-2 wrap_text"
           >
             <span>{{ item.title }}</span>
+          </div>
+          <div class="py-1">
+            {{ item.overview }}
           </div>
         </template>
         <div>
@@ -50,6 +50,15 @@
               @keyup="rate"
             />
           </div>
+          <div class="my-2">
+            <span
+              v-for="genre in item.genres"
+              :key="genre.name"
+              class="mx-1"
+            >
+              {{ genre.name }}
+            </span>
+          </div>
           <a
             v-for="video in videos"
             :key="video.id"
@@ -61,21 +70,7 @@
           </a>
         </div>
       </div>
-    </v-flex>
-    <v-flex>
       <div class="pa-2">
-        <div class="ma-2">
-          <div class="py-1">
-            {{ item.overview }}
-          </div>
-          <div>{{ item.release_date }}</div>
-          <div
-            v-for="lang in item.spoken_languages"
-            :key="lang.name"
-          >
-            {{ lang.name }}
-          </div>
-        </div>
         <div class="overflow-x-hidden my-3">
           <div
             v-for="review in reviews"

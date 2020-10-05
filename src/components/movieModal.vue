@@ -6,7 +6,7 @@
     <VCard>
       <v-layout>
         <v-flex xs8>
-          <v-card-title primary-title>
+          <div class="pa-4">
             <avatar
               :poster-path="item.poster_path"
             />
@@ -23,10 +23,27 @@
                 {{ lang.name }}
               </div>
             </div>
-          </v-card-title>
+            <div class="d-flex overflow-y-hidden mt-2">
+              <div
+                v-for="review in reviews"
+                :key="review.id"
+                class="px-1"
+              >
+                <div>
+                  {{ review.author }}
+                </div>
+                <div
+                  style="max-height: 40vh"
+                  class="overflow-x-hidden"
+                >
+                  {{ review.content }}
+                </div>
+              </div>
+            </div>
+          </div>
         </v-flex>
         <v-flex xs4>
-          <v-card-title primary-title>
+          <div class="pa-4">
             <div>
               <div>
                 <v-icon
@@ -58,8 +75,37 @@
               <div>{{ item.vote_count }}</div>
               <div>{{ item.budget }}</div>
               <div>{{ item.revenue }}</div>
+              <a
+                v-for="video in videos"
+                :key="video.id"
+                :href="'https://www.youtube.com/watch?v='+video.key"
+                class="v-btn"
+                target="_blank"
+              >
+                <div>{{ video.type }}</div>
+              </a>
+              <div class="d-flex overflow-y-hidden">
+                <span
+                  v-for="similar in similars"
+                  :key="similar.id"
+                  class="ma-2"
+                >
+                  <router-link
+                    :to="{ name: 'movieModal', params: { id: similar.id }}"
+                    tag="div"
+                    class="pa-2"
+                  >
+                    <avatar
+                      :poster-path="similar.poster_path"
+                    />
+                    <div class="my-2 justify-center">
+                      {{ similar.title }}
+                    </div>
+                  </router-link>
+                </span>
+              </div>
             </div>
-          </v-card-title>
+          </div>
         </v-flex>
       </v-layout>
     </VCard>
@@ -67,7 +113,7 @@
 </template>
 
 <script>
-import { getMovie, rateMovie } from '../api/api'
+import { getMovie, getMovieReviews, getMovieSimilar, getMovieVideos, rateMovie } from '../api/api'
 import Avatar from './avatar'
 
 export default {
@@ -77,27 +123,45 @@ export default {
   data() {
     return {
       item: {},
+      similars: [],
+      videos: [],
+      reviews: [],
       loading: false,
       success: false,
       error: false,
-      rating: undefined,
-      id: this.$route.params.id
+      rating: undefined
+    }
+  },
+  computed: {
+    id() {
+      return this.$route.params.id;
     }
   },
   watch: {
-    item (val) {
-      if (!val)
-        this.$router.go(-1)
+    item (val, old) {
+      if (!val) {
+        this.$router.push('/')
+      }
+    },
+    id () {
+      this.fetchItems()
     }
   },
   created() {
-    getMovie(this.id)
-      .then(this.onGetMovie)
-      .catch((e) => {
-        alert("Not available movie")
-      })
+    this.fetchItems()
   },
   methods: {
+    async fetchItems() {
+      getMovie(this.id)
+        .then(this.onGetMovie)
+        .catch((e) => {
+          alert("Not available movie")
+        })
+
+      this.similars = await getMovieSimilar(this.id)
+      this.reviews = await getMovieReviews(this.id)
+      this.videos = await getMovieVideos(this.id)
+    },
     onGetMovie (response) {
       this.item = response.data
     },

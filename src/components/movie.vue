@@ -15,7 +15,12 @@
       >
         <avatar :poster-path="item.poster_path" />
       </div>
-      <div class="ma-2">
+      <div
+        class="ma-2"
+        style="overflow-x: hidden;
+          white-space: pre-line;
+          overflow-wrap: break-word;"
+      >
         <span>{{ item.title }}</span>
       </div>
       <div

@@ -39,7 +39,7 @@
 import _ from 'lodash'
 import { CancelToken } from 'axios'
 import Movie from './movie'
-import { getSearchItems } from '../api/api'
+import { getItemsNowPlaying, getSearchItems } from '../api/api'
 import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
 
 export default {
@@ -60,13 +60,19 @@ export default {
       noData: true
     }
   },
-  computed: {
-  },
 
+  computed: {
+    fetchItems() {
+      return this.search ? getSearchItems : getItemsNowPlaying;
+    }
+  },
   watch: {
     search (newSearch) {
       this.searchItems(newSearch, this.page)
     }
+  },
+  created() {
+    this.getItems();
   },
 
   methods: {
@@ -79,7 +85,7 @@ export default {
 
     fetchNextPage() {
       this.page = this.page + 1;
-      this.searchItems(this.search, this.page)
+      this.getItems(this.search, this.page)
     },
 
     /*
@@ -110,7 +116,7 @@ export default {
       this.gotItems = false
       this.cancelGetItems = CancelToken.source()
 
-      return getSearchItems(page, search, this.cancelGetItems)
+      return this.fetchItems(page, this.cancelGetItems, search, )
         .then(this.onGetItems)
         .catch((e) => {
           // eslint-disable-next-line no-console

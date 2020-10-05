@@ -7,12 +7,24 @@ import axios from 'axios'
 let key = 'aab385e5451e92c97c2636a7d3b92694'
 let sessionId
 
-export function getSearchItems (page, searchText, cancelSource) {
+export function getSearchItems (page, cancelSource, searchText) {
   return axios.get(
     `https://api.themoviedb.org/3/search/movie`, {
       params: {
         api_key: key,
         query: searchText,
+        page: page
+      },
+      cancelToken: cancelSource.token
+    }
+  )
+}
+
+export function getItemsNowPlaying(page, cancelSource) {
+  return axios.get(
+    `https://api.themoviedb.org/3/movie/now_playing`, {
+      params: {
+        api_key: key,
         page: page
       },
       cancelToken: cancelSource.token
@@ -28,6 +40,42 @@ export function getMovie (id) {
       }
     }
   )
+}
+
+export function getMovieVideos (id) {
+  return axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/videos`, {
+      params: {
+        api_key: key
+      }
+    }
+  ).then(({ data }) => {
+    return data.results;
+  })
+}
+
+export function getMovieReviews (id) {
+  return axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/reviews`, {
+      params: {
+        api_key: key
+      }
+    }
+  ).then(({ data }) => {
+    return data.results.splice(0,2);
+  })
+}
+
+export function getMovieSimilar (id) {
+  return axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/similar`, {
+      params: {
+        api_key: key
+      }
+    }
+  ).then(({ data }) => {
+    return data.results;
+  })
 }
 
 export function getSessionId () {

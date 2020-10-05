@@ -158,8 +158,12 @@ export default {
      * Gets items, stops loading and checks for no data
      */
     onGetItems (response) {
-      this.items = [...this.items, ...response.data.results]
       this.page = response.data.page
+      if (this.page !== 1) {
+        this.items = [...this.items, ...response.data.results]
+      } else {
+        this.items = response.data.results
+      }
       this.totalPages = response.data.total_pages
       this.loading = false
       this.cancelGetItems = null

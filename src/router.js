@@ -14,7 +14,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'search',
+      name: 'home',
       component: Search,
       children: [
         {
@@ -23,6 +23,11 @@ export default new Router({
           name: 'movieModal'
         }
       ]
+    },
+    {
+      path: '/search/:search',
+      name: 'search',
+      component: Search
     },
     {
       path: '/collections',

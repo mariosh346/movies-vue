@@ -42,11 +42,12 @@
   </v-btn>
 </template>
 
-<script>
-import Avatar from "@/components/avatar";
-import MovieTitle from "@/components/title/movieTitle";
+<script lang="ts">
+import Vue from 'vue'
+import Avatar from "./avatar";
+import MovieTitle from "./title/movieTitle";
 
-export default {
+export default Vue.extend({
   components: { MovieTitle, Avatar },
   props: {
     isModal: {
@@ -69,5 +70,5 @@ export default {
       if (!val) this.$router.go(-1);
     }
   }
-};
+});
 </script>

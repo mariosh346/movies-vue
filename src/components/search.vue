@@ -51,7 +51,7 @@ export default {
   data () {
     return {
       cancelGetItems: null,
-      search: '',
+      search: this.$route.params.search ? this.$route.params.search : '',
       items: [],
       page: 1,
       totalPages: 0,
@@ -60,17 +60,25 @@ export default {
       noData: true
     }
   },
-
   computed: {
     fetchItems() {
       return this.search ? getSearchItems : getItemsNowPlaying;
     }
   },
   watch: {
-
+    search (newSearch) {
+      if (newSearch) {
+        this.$router.push({ path: `/search/${newSearch}` })
+        this.page = 1
+        this.searchItems(newSearch, this.page)
+      } else {
+        this.$router.push('/')
+        this.getItems()
+      }
+    }
   },
   created() {
-    this.getItems();
+    this.getItems(this.search);
   },
 
   methods: {

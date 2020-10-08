@@ -1,12 +1,14 @@
 <template>
   <span>
     <span>{{ title }}</span>
-    <span>  ({{ releaseDate }})</span>
+    <span v-if="releaseDate">  ({{ releaseDate }})</span>
   </span>
 </template>
 
 <script lang="ts">
-export default {
+import Vue from 'vue';
+
+export default Vue.extend({
   name: 'MovieTitle',
   props: {
     title: {
@@ -15,8 +17,8 @@ export default {
     },
     releaseDate: {
       type: String,
-      required: true
+      default: undefined
     }
   }
-};
+});
 </script>

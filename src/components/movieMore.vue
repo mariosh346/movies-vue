@@ -19,7 +19,10 @@
               :title="item.title"
             />
           </div>
-          <div class="py-1">
+          <div
+            style="max-height: 15vh"
+            class="py-1 overflow-x-hidden"
+          >
             {{ item.overview }}
           </div>
         </template>
@@ -65,19 +68,24 @@
               {{ genre.name }}
             </span>
           </div>
-          <a
-            v-for="video in videos"
-            :key="video.id"
-            :href="'https://www.youtube.com/watch?v='+video.key"
-            class="v-btn"
-            target="_blank"
+          <div
+            style="max-height: 7vh"
+            class="overflow-x-hidden"
           >
-            <div>{{ video.type }}</div>
-          </a>
+            <a
+              v-for="video in videos"
+              :key="video.id"
+              :href="'https://www.youtube.com/watch?v='+video.key"
+              class="v-btn"
+              target="_blank"
+            >
+              <div>{{ video.type }}</div>
+            </a>
+          </div>
         </div>
       </div>
       <div class="pa-2">
-        <div class="overflow-x-hidden my-3">
+        <div class="overflow-x-hidden my-2">
           <div
             v-for="review in reviews"
             :key="review.id"
@@ -87,28 +95,27 @@
               {{ review.author }}
             </div>
             <div
-              style="max-height: 30vh"
+              style="max-height: 15vh"
               class="overflow-x-hidden"
             >
               {{ review.content }}
             </div>
           </div>
         </div>
-        <div class="d-flex overflow-y-hidden">
+        <div class="d-flex overflow-y-hidden align-start">
           <router-link
             v-for="similar in similars"
             :key="similar.id"
             :to="{ name: 'movieModal', params: { id: similar.id }}"
             tag="button"
             class="ma-2"
+            style="min-width: 15vw"
           >
-            <div class="pa-2">
-              <avatar
-                :poster-path="similar.poster_path"
-              />
-              <div class="my-2 justify-center">
-                {{ similar.title }}
-              </div>
+            <avatar
+              :poster-path="similar.poster_path"
+            />
+            <div class="my-2 justify-center">
+              {{ similar.title }}
             </div>
           </router-link>
         </div>
@@ -121,8 +128,9 @@
 import { getMovie, getMovieReviews, getMovieSimilar, getMovieVideos, rateMovie } from '../api/api'
 import Avatar from './avatar'
 import MovieTitle from './title/movieTitle.vue';
+import Vue from 'vue';
 
-export default {
+export default Vue.extend({
   components: {
     MovieTitle,
     Avatar
@@ -188,7 +196,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style>

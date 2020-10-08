@@ -19,6 +19,10 @@ export default {
     return {
       //
     }
+  },
+  created() {
+    this.$store.commit('setIsMobile')
+    window.addEventListener("resize", () => this.$store.commit('setIsMobile'));
   }
 }
 </script>
@@ -28,5 +32,14 @@ export default {
   overflow-x: hidden;
   white-space: pre-line;
   overflow-wrap: break-word;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-33 {
+  flex: 0 33%!important;
+}
+.flex-100 {
+  flex: 0 100%!important;
 }
 </style>

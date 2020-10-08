@@ -14,7 +14,8 @@ export const vuexLocalStorage = new VuexPersist({
 export const store = new Vuex.Store({
   plugins: [vuexLocalStorage.plugin],
   state: {
-    collections: []
+    collections: [],
+    isMobile: false
   },
   getters: {
 
@@ -25,6 +26,9 @@ export const store = new Vuex.Store({
     },
     deleteCollection(state, index) {
       delete state.collections[index]
+    },
+    setIsMobile(state) {
+      state.isMobile = window.innerWidth <= 1100
     }
   }
 })

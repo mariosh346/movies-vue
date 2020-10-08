@@ -1,7 +1,7 @@
 <template>
   <v-btn
     style="width: 100%"
-    class="pa-5 ma-1"
+    class="py-5 ma-1"
   >
     <router-link
       :key="item.id"

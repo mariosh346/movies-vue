@@ -22,7 +22,7 @@
           <infinite-scroll
             :items="items"
             :loading="loading"
-            :item-class="isMobile()? 'pa-1' :'flex-33 pa-1'"
+            :item-class="itemClasses"
             @lastItemIsVisible="fetchNextPage"
           >
             <template v-slot="{ item, index }">
@@ -63,6 +63,9 @@ export default {
   computed: {
     fetchItems() {
       return this.search ? getSearchItems : getItemsNowPlaying;
+    },
+    itemClasses() {
+      return this.$store.state.isMobile ? 'flex-100 pa-1' :'flex-33 pa-1';
     }
   },
   watch: {
@@ -165,11 +168,3 @@ export default {
 }
 
 </script>
-<style>
-.flex-wrap {
-  flex-wrap: wrap;
-}
-.flex-33 {
-  flex: 0 33%!important;
-}
-</style>

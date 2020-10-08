@@ -1,7 +1,10 @@
 <template>
   <span>
     <span>{{ title }}</span>
-    <span v-if="releaseDate">  ({{ releaseDate }})</span>
+    <span
+      v-if="releaseDate"
+      class="font-weight-thin ml-1"
+    >({{ releaseDate }})</span>
   </span>
 </template>
 

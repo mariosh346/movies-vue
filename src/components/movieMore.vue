@@ -5,28 +5,22 @@
         v-if="item.title"
         class="pa-2"
       >
-        <template v-if="withHeader">
-          <div
-            style="text-align: left"
-          >
-            <avatar :poster-path="item.poster_path" />
+        <div class="d-flex">
+          <div v-if="withHeader">
+            <div
+              style="text-align: left"
+            >
+              <avatar :poster-path="item.poster_path" />
+            </div>
+            <div
+              class="my-2 wrap_text"
+            >
+              <movie-title
+                :release-date="item.release_date"
+                :title="item.title"
+              />
+            </div>
           </div>
-          <div
-            class="my-2 wrap_text"
-          >
-            <movie-title
-              :release-date="item.release_date"
-              :title="item.title"
-            />
-          </div>
-          <div
-            style="max-height: 15vh"
-            class="py-1 overflow-x-hidden"
-          >
-            {{ item.overview }}
-          </div>
-        </template>
-        <div>
           <div>
             <v-icon
               color="yellow darken-2"
@@ -36,7 +30,7 @@
               star
             </v-icon>
             <span>
-              <span class="headline">{{ item.vote_average }}/10</span>
+              <span class="title">{{ item.vote_average }}/10</span>
               <span class="font-weight-thin">
                 {{ item.vote_count }}
               </span>
@@ -59,6 +53,14 @@
               @keyup="rate"
             />
           </div>
+        </div>
+        <div
+          style="max-height: 15vh"
+          class="py-1 overflow-x-hidden"
+        >
+          {{ item.overview }}
+        </div>
+        <div>
           <div class="my-2">
             <span
               v-for="genre in item.genres"
@@ -138,7 +140,7 @@ export default Vue.extend({
   props: {
     withHeader: {
       type: Boolean,
-      default: false
+      default: true
     },
     id: {
       type: Number,

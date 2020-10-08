@@ -54,22 +54,22 @@
             />
           </div>
         </div>
+        <div class="my-2">
+          <span
+            v-for="genre in item.genres"
+            :key="genre.name"
+            class="mx-1"
+          >
+            {{ genre.name }}
+          </span>
+        </div>
         <div
           style="max-height: 15vh"
           class="py-1 overflow-x-hidden"
         >
           {{ item.overview }}
         </div>
-        <div>
-          <div class="my-2">
-            <span
-              v-for="genre in item.genres"
-              :key="genre.name"
-              class="mx-1"
-            >
-              {{ genre.name }}
-            </span>
-          </div>
+        <div class="my-2">
           <div
             style="max-height: 7vh"
             class="overflow-x-hidden"
@@ -86,8 +86,8 @@
           </div>
         </div>
       </div>
-      <div class="pa-2">
-        <div class="overflow-x-hidden my-2">
+      <div class="mx-2">
+        <div class="overflow-x-hidden mb-2">
           <div
             v-for="review in reviews"
             :key="review.id"

@@ -1,5 +1,5 @@
 <template>
-  <div class="InfiniteScroll">
+  <div class="InfiniteScroll d-flex flex-wrap">
     <template v-for="(item, index) in items">
       <slot
         :item="item"

@@ -8,6 +8,11 @@ import { store } from './store/index'
 
 Vue.config.productionTip = false
 
+
+Vue.prototype.isMobile = () => {
+  return screen.width <= 1100;
+}
+
 new Vue({
   store,
   router,

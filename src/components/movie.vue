@@ -1,7 +1,7 @@
 <template>
   <v-btn
     style="width: 100%"
-    class="pa-5"
+    class="pa-5 ma-1"
   >
     <router-link
       :key="item.id"
@@ -11,17 +11,17 @@
     >
       <div
         class="ma-2"
-        style="text-align: left"
+        style="text-align: left;"
       >
         <avatar :poster-path="item.poster_path" />
       </div>
       <div
-        class="ma-2"
-        style="overflow-x: hidden;
-          white-space: pre-line;
-          overflow-wrap: break-word;"
+        class="ma-2 wrap_text flex-grow-1"
       >
-        <span>{{ item.title }}</span>
+        <movie-title
+          :release-date="item.release_date"
+          :title="item.title"
+        />
       </div>
       <div
         class="ma-2"
@@ -38,30 +38,16 @@
           {{ item.vote_average }}
         </span>
       </div>
-      <!-- <v-list-tile-action>
-                  <v-list-tile-action-text>{{ item.action }}</v-list-tile-action-text>
-                  <v-icon
-                    v-if="selected.indexOf(index) < 0"
-                    color="grey lighten-1"
-                  >
-                    star_border
-                  </v-icon>
-
-                  <v-icon
-                    v-else
-                    color="yellow darken-2"
-                  >
-                    star
-                  </v-icon>
-      </v-list-tile-action>-->
     </router-link>
   </v-btn>
 </template>
 
 <script>
 import Avatar from "@/components/avatar";
+import MovieTitle from "@/components/title/movieTitle";
+
 export default {
-  components: { Avatar },
+  components: { MovieTitle, Avatar },
   props: {
     isModal: {
       type: Boolean,

@@ -1,7 +1,7 @@
 <template> 
   <v-layout row>
     <v-flex>
-      <v-card class="pa-4">
+      <v-card class="py-4 px-2">
         <v-text-field
           v-model="search"
           xs12
@@ -18,10 +18,11 @@
           @click:clear="clearSearch"
         />
         <router-view />
-        <div class="d-flex ma-2 flex-wrap">
-          <infinite-scroll 
+        <div class="ma-2">
+          <infinite-scroll
             :items="items"
             :loading="loading"
+            :item-class="isMobile()? 'pa-1' :'flex-33 pa-1'"
             @lastItemIsVisible="fetchNextPage"
           >
             <template v-slot="{ item, index }">
@@ -50,7 +51,6 @@ export default {
   data () {
     return {
       cancelGetItems: null,
-      selected: null,
       search: '',
       items: [],
       page: 1,
@@ -67,9 +67,7 @@ export default {
     }
   },
   watch: {
-    search (newSearch) {
-      this.searchItems(newSearch, this.page)
-    }
+
   },
   created() {
     this.getItems();
@@ -162,5 +160,8 @@ export default {
 <style>
 .flex-wrap {
   flex-wrap: wrap;
+}
+.flex-33 {
+  flex: 0 33%!important;
 }
 </style>

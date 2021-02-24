@@ -63,6 +63,16 @@
             {{ genre.name }}
           </span>
         </div>
+        <v-select
+          v-model="movieOnCollections"
+          :items="collections"
+          :menu-props="{ maxHeight: '400' }"
+          item-value="id"
+          item-text="title"
+          label="Select Collections"
+          multiple
+          persistent-hint
+        />
         <div
           style="max-height: 15vh"
           class="py-1 overflow-x-hidden"
@@ -131,6 +141,7 @@ import { getMovie, getMovieReviews, getMovieSimilar, getMovieVideos, rateMovie }
 import Avatar from './avatar'
 import MovieTitle from './title/movieTitle.vue';
 import Vue from 'vue';
+import collection from './collection.vue';
 
 export default Vue.extend({
   components: {
@@ -159,6 +170,21 @@ export default Vue.extend({
       rating: undefined
     }
   },
+  computed: {
+    collections() {
+      return this.$store.state.collections;
+    },
+    movieOnCollections: {
+      get() {
+        return this.collections.find((collection) => {
+          return this.item.id in collection.movies
+        })
+      },
+      set(movies) {
+        // this.updateCollection()
+      }
+    }
+  },
   watch: {
     id () {
       this.fetchItems()
@@ -166,8 +192,17 @@ export default Vue.extend({
   },
   created() {
     this.fetchItems()
+    this.$store.dispatch("bindCollections");
   },
   methods: {
+    updateCollection(id, movies) {
+      let newCollection = this.collections.find((collection) => collection.id === id)
+
+      this.$store.dispatch('updateCollection', {
+        id,
+        payload: collection
+      })
+    },
     async fetchItems() {
       getMovie(this.id)
         .then(this.onGetMovie)

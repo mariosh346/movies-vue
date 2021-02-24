@@ -1,14 +1,10 @@
 <template>
   <div>
-    <div
+    <collection
       v-for="(collection) in collections"
       :key="collection.id"
-    >
-      <input
-        v-model="collection.title"
-        type="text"
-      >
-    </div>
+      :collection="collection"
+    />
     <v-btn
       color="success"
       @click="createCollection"
@@ -19,8 +15,10 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import Collection from "@/components/collection";
 
 export default {
+  components: { Collection },
   data() {
     return {
       index: null
@@ -31,10 +29,13 @@ export default {
       'collections'
     ])
   },
+  created() {
+    this.$store.dispatch("bindCollections");
+  },
   methods: {
     createCollection() {
-      this.$store.commit('createCollection', {
-        title: "new",
+      this.$store.dispatch('addCollection', {
+        title: "New Collection",
         movies: []
       })
     }

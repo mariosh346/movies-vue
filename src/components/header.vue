@@ -5,7 +5,7 @@
       <v-list>
         <v-list-tile>
           <router-link
-            :to="{ name: 'search' }"
+            :to="{ name: 'home' }"
             tag="button"
           >
             <v-list-tile-content>

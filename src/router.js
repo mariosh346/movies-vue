@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Search from './components/search.vue'
 import MovieModal from './components/movieModal.vue'
 import Collections from './components/collections.vue'
+import Login from './components/login.vue'
 // import Projects from './views/Projects.vue'
 // import Team from './views/Team.vue'
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/search/:search',
       name: 'search',
       component: Search
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
     },
     {
       path: '/collections',

@@ -40,7 +40,7 @@
 import _ from 'lodash'
 import { CancelToken } from 'axios'
 import Movie from './movie'
-import { getItemsNowPlaying, getSearchItems } from '../api/api'
+import { getItemsNowPlaying, getSearchItems } from '@/api/api'
 import InfiniteScroll from "@/components/InfiniteScroll/InfiniteScroll";
 
 export default {

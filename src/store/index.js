@@ -17,6 +17,7 @@ export const store = new Vuex.Store({
   plugins: [vuexLocalStorage.plugin],
   state: {
     collections: [],
+    user: {},
     isMobile: false
   },
   getters: {
@@ -45,6 +46,27 @@ export const store = new Vuex.Store({
       return db.collection('collections')
         .doc(id)
         .set(payload)
-    })
+    }),
+    addUser(context, payload) {
+      return db.collection('users')
+        .doc(payload.user.uid)
+        .set({
+          email: payload.user.email,
+          emailVerified: payload.user.emailVerified,
+          name: payload.user.displayName,
+          photoURL: payload.user.photoURL,
+          collections: []
+        });
+    },
+    deleteUser(context, payload) {
+      return db.collection('users')
+        .doc(payload)
+        .delete()
+    },
+    updateUser(context, { id, payload }) {
+      return db.collection('users')
+        .doc(id)
+        .set(payload)
+    }
   }
 })

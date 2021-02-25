@@ -36,6 +36,14 @@
             star
           </v-icon>
           {{ item.vote_average }}
+          <v-icon
+            color="white"
+            text="icon"
+            :small="true"
+            class="ml-1 px-1"
+          >
+            add_to_queue
+          </v-icon>
         </span>
       </div>
     </router-link>
@@ -64,7 +72,6 @@ export default Vue.extend({
       rating: null
     };
   },
-
   watch: {
     item(val) {
       if (!val) this.$router.go(-1);

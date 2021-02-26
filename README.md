@@ -1,4 +1,5 @@
 # movies-vue
+Create a Movies project with Vue, Firebase, Vuex, VueRouter, Vuetify, TheMovieDB
 
 ## Project setup
 ```

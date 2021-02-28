@@ -30,7 +30,7 @@
       Movies
     </v-toolbar-title>
     <router-link
-      v-if="!user"
+      v-if="!$store.getters.isLoggedIn"
       :to="{ name: 'login' }"
       tag="button"
     >
@@ -53,12 +53,15 @@ export default {
   },
   data() {
     return  {
-      user: null
     }
   },
   created() {
     firebase.auth().onAuthStateChanged(user => {
-      this.user = user;
+      if (user) {
+        this.$store.dispatch('addUser', { user })
+      } else {
+        this.$store.commit('setUser', {})
+      }
     });
   },
   methods: {

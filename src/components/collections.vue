@@ -29,13 +29,19 @@ export default {
       'collections'
     ])
   },
-  created() {
-    this.$store.dispatch("bindCollections");
+  watch: {
+    '$store.state.user': {
+      immediate: true,
+      handler() {
+        this.$store.dispatch("bindCollections");
+      }
+    }
   },
   methods: {
     createCollection() {
       this.$store.dispatch('addCollection', {
         title: "New Collection",
+        userId: this.$store.state.user.id,
         movies: []
       })
     }

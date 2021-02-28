@@ -6,6 +6,16 @@
         type="text"
       >
     </label>
+    <v-btn
+      flat
+      small
+    >
+      <v-icon
+        text="icon"
+      >
+        close
+      </v-icon>
+    </v-btn>
   </div>
 </template>
 <script>

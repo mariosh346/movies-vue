@@ -1,7 +1,10 @@
 <template>
   <v-toolbar>
-    <v-menu>
-      <v-toolbar-side-icon slot="activator" />>
+    <v-menu
+      :lazy="true"
+      transition="scroll-y-transition"
+    >
+      <v-toolbar-side-icon slot="activator" />
       <v-list>
         <v-list-tile>
           <router-link
@@ -27,7 +30,18 @@
     </v-menu>
 
     <v-toolbar-title class="flex-100">
-      Movies
+      <v-btn
+        tile
+        color="secondary"
+      >
+        <v-icon
+          color="black"
+          text="icon"
+        >
+          movie
+        </v-icon>
+        Movie
+      </v-btn>
     </v-toolbar-title>
     <router-link
       v-if="!$store.getters.isLoggedIn"
@@ -36,23 +50,40 @@
     >
       Login
     </router-link>
-    <button
+    <v-menu
       v-else
-      @click="signOut"
+      :lazy="true"
+      transition="scroll-y-transition"
     >
-      Logout
-    </button>
+      <avatar
+        slot="activator"
+        :poster-full-path="userPhotoURL"
+      />
+      <v-list>
+        <v-list-tile>
+          <button
+            @click="signOut"
+          >
+            Logout
+          </button>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
   </v-toolbar>
 </template>
 <script>
 import firebase from "firebase";
+import Avatar from "@/components/avatar";
+
 
 export default {
   name: "Header",
-  components: {
-  },
-  data() {
-    return  {
+  components: { Avatar },
+  computed: {
+    userPhotoURL() {
+      return 'photoURL' in this.$store.state.user
+        ? this.$store.state.user.photoURL
+        : '';
     }
   },
   created() {

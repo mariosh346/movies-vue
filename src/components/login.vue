@@ -39,7 +39,7 @@ export default {
       callbacks: {
         signInSuccessWithAuthResult: (currentUser) => {
           vm.$store.dispatch('addUser', currentUser)
-          vm.$router.go(-1)
+          vm.$router.go(-2)
           return false
         }
       }

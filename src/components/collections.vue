@@ -16,6 +16,7 @@
 <script>
 import { mapState } from 'vuex'
 import Collection from "@/components/collection";
+import firebase from "firebase";
 
 export default {
   components: { Collection },
@@ -42,6 +43,8 @@ export default {
       this.$store.dispatch('addCollection', {
         title: "New Collection",
         userId: this.$store.state.user.id,
+        dateCreated: firebase.firestore.FieldValue.serverTimestamp(),
+        dateUpdated: firebase.firestore.FieldValue.serverTimestamp(),
         movies: []
       })
     }

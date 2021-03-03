@@ -9,6 +9,7 @@
     <v-btn
       flat
       small
+      @click.prevent="onCloseClicked"
     >
       <v-icon
         text="icon"
@@ -48,6 +49,9 @@ export default {
   created() {
   },
   methods: {
+    onCloseClicked() {
+      this.$store.dispatch('deleteCollection', this.collection)
+    },
     updateCollection(collection) {
       this.$store.dispatch('updateCollection', {
         id: this.collection.id,

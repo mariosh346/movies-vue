@@ -10,7 +10,7 @@ Vue.use(Vuex)
 export const vuexLocalStorage = new VuexPersist({
   storage: window.localStorage,
   reducer: state => ({
-    collections: state.collections
+    // eg. collections: state.collections
   })
 })
 
@@ -36,14 +36,16 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    bindCollections: firestoreAction(({
+    bindCollections: firestoreAction(async ({
       state,
       bindFirestoreRef }) => {
-      // return the promise returned by `bindFirestoreRef`
-      return bindFirestoreRef('collections',
-        db.collection('collections')
-          .where('userId', '==', state.user.id || -1)
-      )
+      if (state.user.id) {
+        await bindFirestoreRef('collections',
+          db.collection('collections')
+            .where('userId', '==', state.user.id)
+            .orderBy('dateCreated')
+        )
+      }
     }),
     addCollection: firestoreAction(async (
       { state, dispatch },
@@ -55,13 +57,19 @@ export const store = new Vuex.Store({
       await userRef.update({
         collections: [...state.user.collections, refCollection]
       })
-      // bind new collection
-      await dispatch('bindCollections')
     }),
-    deleteCollection: firestoreAction((context, payload) => {
-      return db.collection('collections')
-        .doc(payload)
-        .delete()
+    deleteCollection: firestoreAction(async (
+      { state, dispatch },
+      payload
+    ) => {
+      const refCollection = await db.collection('collections')
+        .doc(payload.id)
+      const userRef = db.collection('users')
+        .doc(state.user.id)
+      await userRef.update({
+        collections: state.user.collections.filter(item => item !== payload)
+      })
+      await refCollection.delete()
     }),
     updateCollection: firestoreAction((context, { id, payload } ) => {
       return db.collection('collections')
@@ -79,8 +87,10 @@ export const store = new Vuex.Store({
       { user }
     ) => {
       const refUser = db.collection('users').doc(user.uid)
+      // fetch user
       await dispatch('bindUser', { user })
       if (!getters.isLoggedIn) {
+        // user is not in database
         await refUser.set({
           id: user.uid,
           email: user.email,
@@ -92,7 +102,10 @@ export const store = new Vuex.Store({
         })
       }
     }),
-    deleteUser(context, payload) {
+    deleteUser({ state }, payload) {
+      db.collection('collections')
+        .where('userId', '==', payload)
+        .delete()
       return db.collection('users')
         .doc(payload)
         .delete()

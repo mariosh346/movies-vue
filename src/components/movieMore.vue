@@ -176,12 +176,23 @@ export default Vue.extend({
     },
     movieOnCollections: {
       get() {
-        return this.collections.find((collection) => {
-          return this.item.id in collection.movies
+        let collectionIds = [];
+        this.collections.forEach((collection) => {
+          if (collection.movies.includes(this.item.id)) {
+            collectionIds = [
+              ...collectionIds,
+              collection.id
+            ]
+          }
         })
+
+        return collectionIds
       },
-      set(movies) {
-        // this.updateCollection()
+      set(collectionIDs) {
+        console.log(collectionIDs)
+        this.updateCollections(collectionIDs)
+
+        return collectionIDs
       }
     }
   },
@@ -195,12 +206,17 @@ export default Vue.extend({
     this.$store.dispatch("bindCollections");
   },
   methods: {
-    updateCollection(id, movies) {
-      let newCollection = this.collections.find((collection) => collection.id === id)
+    updateCollections(collectionIDs) {
+      collectionIDs.forEach((id) => {
+        let collection = this.collections.find((collection) => collection.id === id)
 
-      this.$store.dispatch('updateCollection', {
-        id,
-        payload: collection
+        this.$store.dispatch('updateCollection', {
+          id,
+          payload: {
+            ...collection,
+            movies: [...collection.movies, this.item.id]
+          }
+        })
       })
     },
     async fetchItems() {

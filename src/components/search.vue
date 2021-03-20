@@ -1,40 +1,35 @@
 <template> 
-  <v-layout row>
-    <v-flex>
-      <v-card class="py-4 px-2">
-        <v-text-field
-          v-model="search"
-          xs12
-          sm6
-          offset-sm3
-          class="mx-3"
-          flat
-          label="Search"
-          :loading="loading"
-          prepend-inner-icon="search"
-          solo-inverted
-          clearable
-          browser-autocomplete="movies"
-          @click:clear="clearSearch"
-        />
-        <router-view />
-        <div class="ma-2">
-          <infinite-scroll
-            :items="items"
-            :loading="loading"
-            :item-class="itemClasses"
-            @lastItemIsVisible="fetchNextPage"
-          >
-            <template v-slot="{ item, index }">
-              <movie
-                :item="item"
-              />
-            </template>
-          </infinite-scroll>
-        </div>
-      </v-card>
-    </v-flex>
-  </v-layout>
+  <v-flex>
+    <v-text-field
+      v-model="search"
+      xs12
+      sm6
+      offset-sm3
+      flat
+      label="Search"
+      :loading="loading"
+      prepend-inner-icon="search"
+      solo-inverted
+      clearable
+      browser-autocomplete="movies"
+      @click:clear="clearSearch"
+    />
+    <router-view />
+    <div class="my-2">
+      <infinite-scroll
+        :items="items"
+        :loading="loading"
+        :item-class="itemClasses"
+        @lastItemIsVisible="fetchNextPage"
+      >
+        <template v-slot="{ item, index }">
+          <movie
+            :item="item"
+          />
+        </template>
+      </infinite-scroll>
+    </div>
+  </v-flex>
 </template>
 <script>
 import _ from 'lodash'

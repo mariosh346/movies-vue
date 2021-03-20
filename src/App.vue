@@ -2,7 +2,16 @@
   <v-app dark>
     <v-content>
       <Header />
-      <router-view />
+      <v-layout
+        row
+        class=""
+      >
+        <v-flex>
+          <v-card class="py-4 px-3">
+            <router-view />
+          </v-card>
+        </v-flex>
+      </v-layout>
     </v-content>
   </v-app>
 </template>

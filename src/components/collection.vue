@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <v-btn
+    style="width: 32%"
+    class="py-5 ma-1"
+  >
     <label>
       <input
         v-model="collectionTitle"
@@ -17,7 +20,7 @@
         close
       </v-icon>
     </v-btn>
-  </div>
+  </v-btn>
 </template>
 <script>
 

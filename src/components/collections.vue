@@ -5,12 +5,15 @@
       :key="collection.id"
       :collection="collection"
     />
-    <v-btn
-      color="success"
-      @click="createCollection"
-    >
-      Add collection
-    </v-btn>
+    <div>
+      <v-btn
+        color="success"
+        large
+        @click="createCollection"
+      >
+        Create collection
+      </v-btn>
+    </div>
   </div>
 </template>
 <script>

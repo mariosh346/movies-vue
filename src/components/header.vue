@@ -2,7 +2,11 @@
   <v-toolbar>
     <main-menu />
 
-    <v-toolbar-title class="flex-100">
+    <router-link
+      :to="{ name: 'home' }"
+      tag="v-toolbar-title"
+      class="flex-100"
+    >
       <v-btn
         tile
         color="secondary"
@@ -15,7 +19,7 @@
         </v-icon>
         Movies
       </v-btn>
-    </v-toolbar-title>
+    </router-link>
     <router-link
       v-if="!$store.getters.isLoggedIn"
       :to="{ name: 'login' }"

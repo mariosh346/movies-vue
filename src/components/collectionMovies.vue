@@ -45,7 +45,7 @@ export default {
       return this.collections.find((collection) => collection.id === this.$route.params.id)
     },
     collectionName() {
-      return this.collection ? this.collection.name : ''
+      return this.collection ? this.collection.title : ''
     },
     itemClasses() {
       return this.$store.state.isMobile ? 'flex-100 pa-1' :'flex-33 pa-1';

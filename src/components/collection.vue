@@ -1,5 +1,8 @@
 <template>
-  <v-btn
+  <router-link
+    :key="collection.id"
+    :to="{ name: 'collection', params: { id: collection.id }}"
+    tag="v-btn"
     style="width: 32%"
     class="py-5 ma-1"
   >
@@ -20,7 +23,7 @@
         close
       </v-icon>
     </v-btn>
-  </v-btn>
+  </router-link>
 </template>
 <script>
 

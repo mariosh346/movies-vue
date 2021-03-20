@@ -1,33 +1,6 @@
 <template>
   <v-toolbar>
-    <v-menu
-      :lazy="true"
-      transition="scroll-y-transition"
-    >
-      <v-toolbar-side-icon slot="activator" />
-      <v-list>
-        <v-list-tile>
-          <router-link
-            :to="{ name: 'home' }"
-            tag="button"
-          >
-            <v-list-tile-content>
-              <v-list-tile-title>Home</v-list-tile-title>
-            </v-list-tile-content>
-          </router-link>
-        </v-list-tile>
-        <v-list-tile>
-          <router-link
-            :to="{ name: 'collections' }"
-            tag="button"
-          >
-            <v-list-tile-content>
-              <v-list-tile-title>Collections</v-list-tile-title>
-            </v-list-tile-content>
-          </router-link>
-        </v-list-tile>
-      </v-list>
-    </v-menu>
+    <main-menu />
 
     <v-toolbar-title class="flex-100">
       <v-btn
@@ -40,7 +13,7 @@
         >
           movie
         </v-icon>
-        Movie
+        Movies
       </v-btn>
     </v-toolbar-title>
     <router-link
@@ -74,11 +47,14 @@
 <script>
 import firebase from "firebase";
 import Avatar from "@/components/avatar";
-
+import MainMenu from "@/components/menu";
 
 export default {
   name: "Header",
-  components: { Avatar },
+  components: {
+    MainMenu,
+    Avatar
+  },
   computed: {
     userPhotoURL() {
       return 'photoURL' in this.$store.state.user

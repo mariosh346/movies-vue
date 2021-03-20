@@ -189,7 +189,6 @@ export default Vue.extend({
         return collectionIds
       },
       set(collectionIDs) {
-        console.log(collectionIDs)
         this.updateCollections(collectionIDs)
 
         return collectionIDs
@@ -197,13 +196,18 @@ export default Vue.extend({
     }
   },
   watch: {
-    id () {
+    id() {
       this.fetchItems()
+    },
+    '$store.state.user': {
+      immediate: true,
+      handler() {
+        this.$store.dispatch("bindCollections");
+      }
     }
   },
   created() {
     this.fetchItems()
-    this.$store.dispatch("bindCollections");
   },
   methods: {
     updateCollections(collectionIDs) {

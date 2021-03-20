@@ -38,7 +38,8 @@ export const store = new Vuex.Store({
   actions: {
     bindCollections: firestoreAction(async ({
       state,
-      bindFirestoreRef }) => {
+      bindFirestoreRef
+    }) => {
       if (state.user.id) {
         await bindFirestoreRef('collections',
           db.collection('collections')

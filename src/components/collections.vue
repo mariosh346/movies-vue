@@ -1,10 +1,28 @@
 <template>
   <div>
-    <collection
-      v-for="(collection) in collections"
-      :key="collection.id"
-      :collection="collection"
+    <v-text-field
+      xs12
+      sm6
+      offset-sm3
+      flat
+      disabled
+      label="Collections"
+      prepend-inner-icon="movie"
+      solo-inverted
     />
+    <div
+      class="d-flex flex-wrap"
+    >
+      <div
+        v-for="(collection) in collections"
+        :key="collection.id"
+        :class="itemClasses"
+      >
+        <collection
+          :collection="collection"
+        />
+      </div>
+    </div>
     <div>
       <v-btn
         color="success"
@@ -31,7 +49,10 @@ export default {
   computed: {
     ...mapState([
       'collections'
-    ])
+    ]),
+    itemClasses() {
+      return this.$store.getters.itemClasses;
+    }
   },
   watch: {
     '$store.state.user': {

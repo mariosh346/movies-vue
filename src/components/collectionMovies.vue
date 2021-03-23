@@ -6,7 +6,6 @@
       sm6
       offset-sm3
       flat
-      disabled
       label="Collection"
       :loading="loading"
       prepend-inner-icon="movie"
@@ -14,12 +13,25 @@
     />
     <router-view />
 
-    <movie
-      v-for="item in collectionItems"
-      :key="item.id"
-      :class="itemClasses"
-      :item="item"
-    />
+    <div class="d-flex flex-wrap">
+      <div
+        v-for="item in collectionItems"
+        :key="item.id"
+        :class="itemClasses"
+      >
+        <movie
+          :is-in-collection="true"
+          :item="item"
+        />
+      </div>
+    </div>
+    <v-btn
+      color="error"
+      large
+      @click="onDeleteClicked"
+    >
+      Delete collection
+    </v-btn>
   </v-flex>
 </template>
 <script>
@@ -44,16 +56,26 @@ export default {
     collection() {
       return this.collections.find((collection) => collection.id === this.$route.params.id)
     },
-    collectionName() {
-      return this.collection ? this.collection.title : ''
+    collectionName: {
+      set(title) {
+        this.updateCollection({
+          ...this.collection,
+          title
+        })
+      },
+      get() {
+        return this.collection ? this.collection.title : ''
+      }
     },
     itemClasses() {
-      return this.$store.state.isMobile ? 'flex-100 pa-1' :'flex-33 pa-1';
+      return this.$store.getters.itemClasses;
     }
   },
   watch: {
     collection(newVal) {
-      this.getItems(newVal)
+      if (newVal) {
+        this.getItems(newVal)
+      }
     },
     '$store.state.user': {
       immediate: true,
@@ -65,11 +87,31 @@ export default {
 
   methods: {
     getItems(collection) {
+      this.collectionItems = []
+      const promises = []
+      this.loading = true
+
       collection.movies.forEach((movieId) => {
-        getMovie(movieId).then((response) => {
-          this.collectionItems.push(response.data)
-        })
+        promises.push(
+          getMovie(movieId).then((response) => {
+            this.collectionItems.push(response.data)
+          })
+        )
       })
+
+      Promise.allSettled(promises).then(() => {
+        this.loading = false
+      });
+    },
+    updateCollection(collection) {
+      this.$store.dispatch('updateCollection', {
+        id: this.collection.id,
+        payload: collection
+      })
+    },
+    async onDeleteClicked() {
+      await this.$store.dispatch('deleteCollection', this.collection)
+      this.$router.go(-1)
     }
   }
 }

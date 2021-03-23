@@ -3,15 +3,14 @@
     :key="collection.id"
     :to="{ name: 'collection', params: { id: collection.id }}"
     tag="v-btn"
-    style="width: 32%"
-    class="py-5 ma-1"
+    style="width: 100%"
+    class="py-5 ma-0"
   >
-    <label>
-      <input
-        v-model="collectionTitle"
-        type="text"
-      >
-    </label>
+    <span 
+      class="flex"
+    >
+      {{ collectionTitle }}
+    </span>
     <v-btn
       flat
       small
@@ -40,16 +39,8 @@ export default {
     }
   },
   computed: {
-    collectionTitle: {
-      set(title) {
-        this.updateCollection({
-          ...this.collection,
-          title
-        })
-      },
-      get() {
-        return this.collection.title
-      }
+    collectionTitle() {
+      return this.collection.title
     }
   },
   created() {
@@ -57,12 +48,6 @@ export default {
   methods: {
     onCloseClicked() {
       this.$store.dispatch('deleteCollection', this.collection)
-    },
-    updateCollection(collection) {
-      this.$store.dispatch('updateCollection', {
-        id: this.collection.id,
-        payload: collection
-      })
     }
   }
 }

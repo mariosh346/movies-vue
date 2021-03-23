@@ -22,6 +22,9 @@ export const store = new Vuex.Store({
     isMobile: false
   },
   getters: {
+    itemClasses: state => {
+      return state.isMobile ? 'flex-100 pa-1' :'flex-33 pa-1'
+    },
     isLoggedIn: state => {
       return 'id' in state.user
     }

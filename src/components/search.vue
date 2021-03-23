@@ -60,7 +60,7 @@ export default {
       return this.search ? getSearchItems : getItemsNowPlaying;
     },
     itemClasses() {
-      return this.$store.state.isMobile ? 'flex-100 pa-1' :'flex-33 pa-1';
+      return this.$store.getters.itemClasses;
     }
   },
   watch: {

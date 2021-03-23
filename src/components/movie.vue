@@ -5,7 +5,7 @@
   >
     <router-link
       :key="item.id"
-      :to="{ name: 'movieModal', params: { id: item.id }}"
+      :to="{ name: linkName, params: { id: item.id }}"
       tag="div"
       class="d-flex ma-2 align-center v-content__wrap"
     >
@@ -58,9 +58,9 @@ import MovieTitle from "./title/movieTitle";
 export default Vue.extend({
   components: { MovieTitle, Avatar },
   props: {
-    isModal: {
+    isInCollection: {
       type: Boolean,
-      value: true
+      value: false
     },
     item: {
       type: Object,
@@ -71,6 +71,11 @@ export default Vue.extend({
     return {
       rating: null
     };
+  },
+  computed: {
+    linkName() {
+      return this.isInCollection ? 'movieCollection' : 'movieModal';
+    }
   },
   watch: {
     item(val) {

@@ -15,7 +15,7 @@
     "lodash": "^4.17.20",
     "material-design-icons-iconfont": "^3.0.3",
     "roboto-fontface": "*",
-    "underscore": "^1.9.1",
+    "underscore": "^1.12.1",
     "vue": "^2.6.10",
     "vue-observe-visibility": "^0.4.6",
     "vue-router": "^3.0.6",
